@@ -1,0 +1,110 @@
+{% extends 'prant.html' %}
+{% block body %}
+<div class="container mt-5">
+    <h2>Submit Your Solution</h2>
+    
+    <form method="POST" onsubmit="updateCodeMirror()">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            
+            <select name="task" id="task" class="form-select" onchange="updateTaskDetails()">
+                {% for task in tasks %}
+                    <option value="{{ task.id }}" data-title="{{ task.title }}" data-description="{{ task.description }}">{{ task.title }}</option>
+                {% empty %}
+                    <option disabled>No tasks available</option>
+                {% endfor %}
+            </select>
+            
+            <h3 id="task-title">{{ tasks.0.title }}</h3>  <!-- Pehla task by default -->
+            <p id="task-description">{{ tasks.0.description }}</p>
+            
+        </div>
+        
+        <p class="card-text">{{ task.description|truncatewords:15 }}</p>
+
+        <label for="language" class="form-label">Select Language:</label>
+        <select id="language" class="form-select w-25 mb-2">
+            <option value="Python">Python</option>
+            <option value="Cpp">C++</option>
+            <option value="Java">Java</option>
+        </select>
+
+        <label for="editor" class="form-label">Write Your Code:</label>
+        <textarea id="editor" name="code"></textarea>
+
+        <button class="btn btn-primary mt-2" type="button" onclick="compileCode()">Run Code</button>
+
+        <div class="mt-3">
+            <h5>Output:</h5>
+            <pre class="p-2 bg-light" id="output"></pre>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-2">Submit</button>
+    </form>
+
+    {% if result %}
+    <td>
+        {% if submission.is_correct %}
+            <span class="badge bg-success">Approved</span>
+        {% else %}
+            <span class="badge bg-danger">Rejected</span>
+        {% endif %}
+    </td>
+    {% endif %}
+</div>
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        mode: "python",
+        lineNumbers: true,
+        theme: "dracula",
+        autoCloseBrackets: true,
+    });
+
+    document.getElementById("language").addEventListener("change", function() {
+        var lang = this.value;
+        var mode = lang === "Python" ? "python" : "text/x-c++src";
+        if (lang === "Java") mode = "text/x-java";
+        editor.setOption("mode", mode);
+    });
+
+    function compileCode() {
+        var code = editor.getValue();
+        var lang = document.getElementById("language").value;
+        var taskId = document.getElementById("task").value; // Get selected task ID
+
+        fetch("/api/compile/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: code, lang: lang, task_id: taskId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("output").innerText = data.output || "Error";
+
+            if (data.is_correct) {
+                alert("✅ Correct Output! Approved.");
+            } else {
+                alert("❌ Incorrect Output! Try again.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+
+    function updateCodeMirror() {
+        document.getElementById("editor").value = editor.getValue();
+    }
+</script>
+<script>
+    function updateTaskDetails() {
+        var selectedTask = document.getElementById("task");
+        var title = selectedTask.options[selectedTask.selectedIndex].getAttribute("data-title");
+        var description = selectedTask.options[selectedTask.selectedIndex].getAttribute("data-description");
+
+        document.getElementById("task-title").innerText = title;
+        document.getElementById("task-description").innerText = description;
+    }
+</script>
+
+{% endblock %}

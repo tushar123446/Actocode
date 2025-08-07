@@ -1,0 +1,10 @@
+{% extends "prant.html" %}
+{% block body %}
+{% csrf_token %}
+<h2>👤 Profile</h2>
+<p>Welcome, {{ user.username }}!</p>
+<p>Email: {{ user.email }}</p>
+<p>💰 Coins: {{ user.userprofile.coins }}</p>
+<p>Refferl: {{ user.code }}</p>
+<a href="{% url 'login'%}" class="btn btn-danger">Logout</a>
+{% endblock %}

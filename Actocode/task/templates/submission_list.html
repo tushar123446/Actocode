@@ -1,0 +1,37 @@
+{% extends "prant.html" %}
+{% block body %}
+<div class="container mt-5">
+    <h2>Your Submissions</h2>
+
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Task</th>
+                <th>Submitted Code</th>
+                <th>Status</th>
+                <th>Reward Coins</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.task.title }}</td>
+                <td><pre>{{ submission.code }}</pre></td>
+                <td>
+                    <span class="badge bg-{% if submission.is_correct %}success{% else %}danger{% endif %}">
+                        {{ submission.status }}
+                    </span>
+                </td>
+                <td>
+                {% if submission.is_correct %}
+    {{ submission.task.reward_coins }}
+{% else %}
+    0
+{% endif %}</td>
+
+             </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

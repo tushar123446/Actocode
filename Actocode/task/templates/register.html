@@ -1,0 +1,371 @@
+  
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../static/css/55.css"> 
+    <link rel="stylesheet" href="../static/css/slider.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@611&family=Fira+Code:wght@409&family=Playwrite+IN:wght@100..400&family=Playwrite+VN&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@1,300&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css"> 
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+    <link rel="stylesheet" href="../static/codemirror-5.65.18/lib/codemirror.css">
+    <link rel="stylesheet" href="../static/codemirror-5.65.18/theme/dracula.css">
+    <script src="../static/codemirror-5.65.18/addon/edit/closebrackets.js"></script>
+    <script src="../static/codemirror-5.65.18/lib/codemirror.js"></script>
+    <script src="../static/codemirror-5.65.18/mode/clike/clike.js"></script>
+
+</head>
+<body>
+    
+        <div id="outer">
+            <div class="Wrapper">
+                <!--aside id="sidebar">
+                    <div class="d-flex" style="border-bottom: 0.01rem solid bisque;">
+                        <button id="toggle-btn" type="button" class="mt-2 mb-2">
+                            <i class="fa-solid fa-grip"></i>
+                        </button>
+                        <div class="sidebar-logo">
+                            <a href="#">
+                                <span style=" font-family: Fira Code, serif;
+                                font-optical-sizing: auto;
+                                font-weight: 300;
+                                font-style: normal;">Actocode</span>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="slidebar-nav"> 
+                        <li class="slidebar-item">
+                            <a href="{%url 'prant'%}" class="slidebar-link">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="slidebar-item">
+                            <a href="{%url 'editor'%}" class="slidebar-link">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                 <span>Editor</span>
+                            </a>
+                        </li>
+                        <li class="slidebar-item">
+                            <a href="{%url 'task'%}" class="slidebar-link">
+                                <i class="fa-solid fa-list-check"></i>
+                                 <span>Challengs</span>
+                            </a>
+                        </li>
+                        <li class="slidebar-item">
+                            <a href="{% url 'dashboard'%}" class="slidebar-link">
+                                <i class="fa-solid fa-money-bill"></i>
+                                <span>Earning</span>
+                            </a>
+                        </li>
+                        <li class="slidebar-item">
+                            <a href="#" class="slidebar-link">
+                                <i class="fa-solid fa-cannabis"></i>
+                                <span>Referr</span>
+                            </a>
+                        </li>
+                        <li class="slidebar-item">
+                            <a href="#" class="slidebar-link">
+                                <i class="fa-brands fa-discourse"></i>
+                                <span>corses</span>
+                            </a>
+                        </li>
+                        <li class="slidebar-item">
+                            <a href="{% url 'profile'%}  " class="slidebar-link">
+                                <i class="fa-brands fa-discourse"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li class="slidebar-item">
+                            <a href="#" class="slidebar-link has-dropdown collapsed " data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                                <i class="fa-solid fa-umbrella"></i>
+                                <span>Auth</span>
+                            </a>
+                            <ul id="auth" class="sildebar-dropdown list-unstyled collapse"   data-bs-parent="#sidebar">
+                                <li>
+                                    <a href="#" class="slidebar-link"> login</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="slidebar-link"> signin</a>
+                                </li>
+                             </ul>
+                        </li>
+                    </ul>
+                    <div class="sidebar-footer ms-3">
+                        <a href="{% url 'login'%}" class="slidebar-link">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>lagout</span>
+                        </a>
+                    </div>
+                </aside>
+                <!-- main web-->
+            
+                <div class="container-fluid">
+                    <div class="row"> 
+                
+                    <div class="row bg-dark" style="border-bottom: 0.01rem solid bisque;">
+                        <nav class="navbar navbar-expand-lg navbar-light  " style="background-color:black">
+                            <a class="navbar-brand" href="#"><img class=" " style="background-color: black;" width="50rem"  height="50rem"  src="../static/img/logo.png" alt=""></a>
+                            <a class="text-light fs-1 nav-item active" style="text-decoration: none;" href="{%url 'home'%}" >ActoCode</a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                             </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav mr-auto ms-auto px-5">
+                                <li class="nav-item active px-3">
+                                  <a class="nav-link text-light" href="{%url 'login'%}">Editor</a>
+                                </li>
+                                <li class="nav-item px-3">
+                                  <a class="nav-link text-light" href="{%url 'login'%}">Challengs</a>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <a class="nav-link text-light" href="#">company & more</a>
+                                  </li>
+                                 
+                                <li class="nav-item px-3 me-5" style="border-right: 0.01rem  solid bisque ">
+                                  <a class="nav-link text-light" href="#">AI</a>
+                                </li>
+                                <li class="nav-item px-3 ">
+                                <button class="btn text-light" type="submit"><a href="{% url 'login' %}">Login</a></button>
+                                </li>
+                              </ul>
+                            </div>
+                          </nav>
+                    </div>
+                 <!--main body-->  
+                 <div class="col-md-8 "> 
+                        <div class="w-100  ">
+                    <div class="swiper w-100   ">
+      <div class="swiper-wrapper  ">
+         <div class="swiper-slide">
+            <img src="../static/img/jb1.jpg" alt="">
+         </div>
+         <div class="swiper-slide">
+            <img src="../static/img/jb2.jpg" alt="">
+         </div>
+         <div class="swiper-slide">
+            <img src="../static/img/jb3.jpg" alt="">
+         </div>
+         <div class="swiper-slide">
+            <img src="../static/img/jb4.jpg" alt="">
+         </div>
+      </div>
+
+                 </div>    
+                 </div>
+                 </div>
+
+
+                 <div class="col-md-4 ms-auto mt-5  mb-5" > 
+                 <div class="card ms-5 w-75 "  > 
+                <div class="card-body" style="margin-top: 100px; margin-bottom: 100px;">
+                <div  class="text-center">
+                <h2 class="display-4 text-dark fw-bold tct py-3" style="font-size: 6vh;"> Register</h2>
+                </div>
+<form method="POST" >
+    {% csrf_token %}
+    <div class="mb-3 pe-4 ps-4" style="width: 200;">
+        <label>Username</label>
+        <input type="text" name="username" class="form-control" required>
+    </div>
+    <div class="mb-3  pe-4 ps-4">
+        <label>Email</label>
+        <input   type="email" name="email" class="form-control" required>
+    </div>
+    <div class="mb-3  pe-4 ps-4 w-75">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required>
+    </div>
+    <div class="mb-3 pe-4 ps-4   ">
+        <label>Confirm Password</label>
+        <input type="password" name="confirm_password" class="form-control" required>
+    </div>
+    <div class="text-center">
+    <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+</form> 
+<div class="text-center">
+
+<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>  
+</div>
+</div>
+</div> 
+</div>
+             
+              <!--mainbody-->
+          
+           
+              <!--mainbody end-->
+           
+                <!--mainbody end-->
+     <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block">
+      <span>Get connected with us on social networks:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Company name
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Products
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Angular</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">React</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Vue</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Laravel</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Pricing</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Settings</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Orders</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Help</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+          <p><i class="fas fa-home me-3"></i> India, IN 10012, US</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            info@example.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2025 Copyright:
+    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">Actocode.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+                </div>
+                    
+             
+            </div>
+            <!--main web end-->
+          
+           
+            </div>
+        </div>
+            <script src="../static/js/style.js"></script>
+            <script src="https://cdn.jsdelivr.net/n"></script> 
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> 
+             <script>
+      const swiper = new Swiper(".swiper", {
+         autoplay: {
+            delay: 2000,
+         },
+         pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+         },
+         navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+         },
+         loop: true,
+         slidesPerView: 1,
+         spaceBetween: 1,
+      });
+   </script>
+
+ </body>
+</html>
+
+
+ 
+ 

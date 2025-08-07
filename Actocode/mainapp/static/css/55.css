@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+}
+.Wrapper{
+   display:flex; 
+    
+}
+.main{
+    height: 100vh;
+    width: 100%;
+    overflow:hidden;
+    transition: all 0.35s ease-out;
+    background-color:rgb(47, 138, 218);
+}
+#sidebar{
+    width: 0rem;
+    min-width:0rem;
+    z-index: 100;
+    
+    transition: all .25s ease-out;
+    display:block;
+    background-color: black;
+    flex-direction: column;
+}
+#sidebar.expand{
+   width: 19rem;
+   min-width: 19rem;
+   height:auto;
+  
+  }
+#toggle-btn{
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1rem;
+    border-right: #ead7d7;
+
+}
+.full{
+    
+}
+#toggle-btn i {
+    font-size: 2rem;
+    color:#fff;
+}
+.sidebar-logo{
+    margin: auto 0;
+}
+.sidebar-logo a{
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    
+}
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) .slidebar-link {
+    display: none; 
+    transition: all .25s ease-in-out;
+}
+.sidebar-nav{
+    padding: 0rem 0;
+    flex: 1 1 auto;
+
+}
+a.slidebar-link {
+    padding: rem 1.625rem;
+    color: #fff;
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    white-space: nowrap;
+    border-left:3px solid transparent ;
+}
+.slidebar-link i {
+    font-size: 1.2rem;
+    
+}
+a.slidebar-link:hover{
+    background-color: gray;
+    border-left: 3px solid blue;
+}
+.slidebar-item{
+    position:relative;
+}
+#sidebar:not(.expand) .slidebar-item .sildebar-dropdown{
+    position: absolute;
+    top:0;
+    left: 70px;
+    background-color:gray;
+    padding: 0;
+    min-width: 15rem;
+    display: none;
+}
+#sidebar:not(.expand) .slidebar-item:hover .has-dropdown+.sildebar-dropdown{
+    display: block;
+    max-width: 15em;
+    width: 100%;
+    opacity: 1;
+}
+#slidebar.expand .slidebar-link[data-bs-toggle="collapse"]::after{
+    border: solid;
+    border-width: 0 .075rem .075rem 0 ;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 2.5rem;
+    transform: rotate(-135deg);
+    transition:all .2s ease-out ;
+}
+#sidebar.expand .slidebar-link[data-bs-toggle="collapse"].collapsed::after{
+    transform: rotate(45deg) ;
+    transition: all .2s ease-out;
+}
+#outer{
+    width: 100%;
+    height: 100%;
+}
+ 

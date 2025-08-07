@@ -1,0 +1,90 @@
+{% extends 'prant.html' %}
+{% block body %}
+<div class="mt-4">
+    <h2>Online Code Compiler</h2>
+    
+    <select id="language" class="form-select w-25 mb-2">
+        <option value="Python">Python</option>
+        <option value="Cpp">C++</option>
+        <option value="Java">Java</option>
+    </select>
+
+    <p class="lead">{{ task.description }}</p>
+
+    <input type="hidden" id="task-id" value="{{ task.id }}"> <!-- Task ID -->
+
+    <textarea id="editor"></textarea>
+    <input type="text" id="input-data" class="form-control mt-2" placeholder="Input (optional)">
+    <button class="btn btn-primary mt-2" onclick="compileCode()">Run Code</button>
+
+    <div>
+        <label for="code" class="form-label">Your Code:</label>
+        <pre class="mt-3 p-2 bg-light" id="output"></pre>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2" onclick="submitTask()">Submit</button>
+
+    <div class="mt-3">
+        {% if result %}
+        <td>
+            {% if submission.is_correct %}
+                <span class="badge bg-success">Approved</span>
+            {% else %}
+                <span class="badge bg-danger">Rejected</span>
+            {% endif %}
+        </td>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        mode: "python",
+        lineNumbers: true,
+        theme: "dracula",
+        autoCloseBrackets: true,
+    });
+
+    document.getElementById("language").addEventListener("change", function() {
+        var lang = this.value;
+        var mode = lang === "Python" ? "python" : "text/x-c++src";
+        if (lang === "Java") mode = "text/x-java";
+        editor.setOption("mode", mode);
+    });
+
+    function compileCode() {
+        var code = editor.getValue();
+        var inputData = document.getElementById("input-data").value;
+        var lang = document.getElementById("language").value;
+
+        fetch("/api/compile/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: code, input: inputData, lang: lang })
+        })
+        .then(response => response.json())
+        .then(data => document.getElementById("output").innerText = data.output || "Error")
+        .catch(error => console.error("Error:", error));
+    }
+
+    function submitTask() {
+        var code = editor.getValue();
+        var taskId = document.getElementById("task-id").value;
+
+        fetch("/api/submissions/", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"  // Ensure CSRF token is included
+            },
+            body: JSON.stringify({ task: taskId, code: code })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Submission Status: " + data.status);
+            location.reload();  // Refresh the page to show updated coin balance
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Code Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+</head>
+<body>-->
+{% extends 'prant.html' %}
+{% block body  %}
+    <div class=" mt-4">
+        <h2>Online Code Compiler</h2>
+        <select id="language" class="form-select w-25 mb-2">
+            <option value="Python">Python</option>
+            <option value="Cpp">C++</option>
+            <option value="Java">Java</option>
+        </select>`
+        <textarea id="editor"></textarea>
+        <input type="text" id="input-data" class="form-control mt-2" placeholder="Input (optional)">
+        <button class="btn btn-primary mt-2" onclick="compileCode()">Run Code</button>
+        <pre class="mt-3 p-2 bg-light" id="output"></pre>
+    </div>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            mode: "python",
+            lineNumbers: true,
+            theme: "dracula",
+            autoCloseBrackets: true,
+        });
+
+        document.getElementById("language").addEventListener("change", function() {
+            var lang = this.value;
+            var mode = lang === "Python" ? "python" : "text/x-c++src";
+            if (lang === "Java") mode = "text/x-java";
+            editor.setOption("mode", mode);
+        });
+
+        function compileCode() {
+            var code = editor.getValue();
+            var inputData = document.getElementById("input-data").value;
+            var lang = document.getElementById("language").value;
+
+            fetch("/api/compile/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code: code, input: inputData, lang: lang })
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById("output").innerText = data.output || "Error")
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+    
+    {% endblock %}
+<!--</body>
+</html>-->
